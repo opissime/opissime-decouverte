@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Studio Opissime — Formulaire de découverte</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F2EDE4;
+    --beige: #E8E0D4;
+    --sand: #CFC4B4;
+    --charcoal: #1E1C18;
+    --mid: #6B6456;
+    --light: #B8AD9F;
+    --white: #FDFAF6;
+    --accent: #1E1C18;
+    --green-bg: #EAF0E4;
+    --green-text: #3A5E2B;
+    --amber-bg: #F5EDD8;
+    --amber-text: #7A5820;
+    --radius: 2px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .logo-area {
+    margin-bottom: 3rem;
+    text-align: left;
+  }
+
+  .logo-area .studio {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  .logo-area .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-top: 4px;
+  }
+
+  .logo-area .subtitle {
+    font-size: 13px;
+    color: var(--mid);
+    margin-top: 10px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 1px;
+    background: var(--sand);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--charcoal);
+    transition: width 0.5s ease;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .step { display: none; animation: fadeUp 0.4s ease; }
+  .step.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--light);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .q-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .q-sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 1.8rem;
+    font-weight: 300;
+  }
+
+  .field-group { margin-bottom: 1.2rem; }
+
+  .field-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--sand);
+    padding: 10px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s;
+    font-weight: 300;
+  }
+
+  input[type="text"]:focus, input[type="email"]:focus {
+    border-bottom-color: var(--charcoal);
+  }
+
+  input::placeholder { color: var(--light); font-weight: 300; }
+
+  .choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 2rem; }
+
+  .choice {
+    border: 1px solid var(--sand);
+    background: var(--white);
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: var(--radius);
+  }
+
+  .choice:hover { border-color: var(--mid); }
+
+  .choice.selected {
+    border-color: var(--charcoal);
+    background: var(--beige);
+  }
+
+  .choice-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .choice.selected .choice-icon { background: var(--beige); border-color: var(--sand); }
+
+  .choice-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+
+  .choice-text span {
+    font-size: 12px;
+    color: var(--mid);
+    font-weight: 300;
+  }
+
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+
+  .tag {
+    border: 1px solid var(--sand);
+    background: var(--white);
+    padding: 8px 16px;
+    font-size: 12px;
+    color: var(--mid);
+    cursor: pointer;
+    border-radius: 40px;
+    transition: all 0.2s;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  .tag:hover { border-color: var(--mid); color: var(--charcoal); }
+
+  .tag.selected {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--white);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  .btn-back {
+    font-size: 12px;
+    color: var(--light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .btn-back:hover { color: var(--mid); }
+
+  .btn-next {
+    background: var(--charcoal);
+    color: var(--white);
+    border: none;
+    padding: 12px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: opacity 0.2s;
+    font-weight: 400;
+  }
+
+  .btn-next:hover { opacity: 0.8; }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--sand);
+    margin: 2.5rem 0;
+  }
+
+  .result-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .result-block .r-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 10px;
+  }
+
+  .result-block .r-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .result-block .r-body {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .info-box {
+    background: var(--beige);
+    border-left: 2px solid var(--sand);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-top: 10px;
+    font-weight: 300;
+  }
+
+  .info-box strong { color: var(--charcoal); font-weight: 400; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 4px 14px;
+    border-radius: 40px;
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  .badge-green { background: var(--green-bg); color: var(--green-text); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .badge-dark { background: var(--charcoal); color: var(--white); }
+
+  .note-box {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    padding: 18px 20px;
+    margin-top: 2rem;
+    border-radius: var(--radius);
+  }
+
+  .note-box .note-title {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 10px;
+  }
+
+  .note-box pre {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--mid);
+    white-space: pre-wrap;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .restart-link {
+    font-size: 12px;
+    color: var(--light);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 2rem;
+    display: inline-block;
+  }
+
+  .restart-link:hover { color: var(--mid); }
+
+  @media (max-width: 480px) {
+    body { padding: 2rem 1rem 3rem; }
+    .q-label { font-size: 22px; }
+    .logo-area .title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="logo-area">
+    <div class="studio">Studio</div>
+    <div class="title">Opissime</div>
+    <div class="subtitle">Avant de commencer, quelques questions pour mieux vous accompagner<br>et identifier les financements disponibles pour vous.</div>
+  </div>
+
+  <div class="progress-label" id="progress-label">Étape 1 sur 4</div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
+  </div>
+
+  <!-- ÉTAPE 0 : Identité -->
+  <div class="step active" id="step-0">
+    <div class="q-number">— 01</div>
+    <div class="q-label">Faisons connaissance.</div>
+    <div class="q-sub">Ces informations resteront confidentielles.</div>
+
+    <div class="field-group">
+      <label>Prénom</label>
+      <input type="text" id="f-prenom" placeholder="Votre prénom" />
+    </div>
+    <div class="field-group">
+      <label>Votre activité</label>
+      <input type="text" id="f-activite" placeholder="ex. Naturopathe, coach, créatrice de bijoux…" />
+    </div>
+    <div class="field-group">
+      <label>Email (facultatif)</label>
+      <input type="email" id="f-email" placeholder="Pour recevoir un résumé" />
+    </div>
+
+    <div class="nav">
+      <span></span>
+      <button class="btn-next" onclick="next()">Continuer</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 1 : Statut -->
+  <div class="step" id="step-1">
+    <div class="q-number">— 02</div>
+    <div class="q-label">Quel est votre statut professionnel ?</div>
+    <div class="q-sub">Cela nous permet d'identifier vos droits à la formation.</div>
+
+    <div class="choices">
+      <div class="choice" onclick="select(this,'statut','salarie')">
+        <div class="choice-icon">&#x1F454;</div>
+        <div class="choice-text">
+          <strong>Salariée</strong>
+          <span>En poste, avec un employeur</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'statut','ae')">
+        <div class="choice-icon">&#x1F331;</div>
+        <div class="choice-text">
+          <strong>Auto-entrepreneuse / freelance</strong>
+          <span>Indépendante, à mon compte</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'statut','dirigeante')">
+        <div class="choice-icon">&#x1F3E2;</div>
+        <div class="choice-text">
+          <strong>Dirigeante de TPE / SARL / SAS</strong>
+          <span>Je gère une structure avec des salariés</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'statut','demandeur')">
+        <div class="choice-icon">&#x1F504;</div>
+        <div class="choice-text">
+          <strong>En transition / recherche d'emploi</strong>
+          <span>Inscrite à France Travail ou en reconversion</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'statut','autre')">
+        <div class="choice-icon">&#x2736;</div>
+        <div class="choice-text">
+          <strong>Autre situation</strong>
+          <span>Retraitée, étudiante, bénévole…</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="prev()">← Retour</button>
+      <button class="btn-next" onclick="next()">Continuer</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 : Besoins -->
+  <div class="step" id="step-2">
+    <div class="q-number">— 03</div>
+    <div class="q-label">Où en êtes-vous avec votre communication ?</div>
+    <div class="q-sub">Plusieurs réponses possibles — choisissez ce qui vous ressemble.</div>
+
+    <div class="tags-wrap">
+      <span class="tag" onclick="toggleTag(this,'depart')">Je démarre de zéro</span>
+      <span class="tag" onclick="toggleTag(this,'refonte')">Je veux refondre mon image</span>
+      <span class="tag" onclick="toggleTag(this,'positionnement')">Je cherche mon positionnement</span>
+      <span class="tag" onclick="toggleTag(this,'reseaux')">Je galère avec les réseaux</span>
+      <span class="tag" onclick="toggleTag(this,'identite')">Pas d'identité visuelle cohérente</span>
+      <span class="tag" onclick="toggleTag(this,'clients')">Attirer plus de clients</span>
+      <span class="tag" onclick="toggleTag(this,'autonomie')">Gagner en autonomie</span>
+      <span class="tag" onclick="toggleTag(this,'storytelling')">Raconter mon histoire</span>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="prev()">← Retour</button>
+      <button class="btn-next" onclick="next()">Continuer</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 : Budget -->
+  <div class="step" id="step-3">
+    <div class="q-number">— 04</div>
+    <div class="q-label">Avez-vous une idée de votre budget ?</div>
+    <div class="q-sub">Sans engagement — cette information nous aide à orienter nos échanges.</div>
+
+    <div class="choices">
+      <div class="choice" onclick="select(this,'budget','petit')">
+        <div class="choice-icon">&#x1F4A7;</div>
+        <div class="choice-text">
+          <strong>Moins de 300 € / mois</strong>
+          <span>Budget serré, je cherche à optimiser</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'budget','moyen')">
+        <div class="choice-icon">&#x1F4A7;&#x1F4A7;</div>
+        <div class="choice-text">
+          <strong>300 à 700 € / mois</strong>
+          <span>Je peux investir progressivement</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'budget','grand')">
+        <div class="choice-icon">&#x1F4A7;&#x1F4A7;&#x1F4A7;</div>
+        <div class="choice-text">
+          <strong>Plus de 700 € / mois</strong>
+          <span>Prête à investir sérieusement</span>
+        </div>
+      </div>
+      <div class="choice" onclick="select(this,'budget','inconnu')">
+        <div class="choice-icon">?</div>
+        <div class="choice-text">
+          <strong>Je ne sais pas encore</strong>
+          <span>J'attends de voir les options</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="prev()">← Retour</button>
+      <button class="btn-next" onclick="showResult()">Voir mon profil →</button>
+    </div>
+  </div>
+
+  <!-- RÉSULTAT -->
+  <div class="step" id="step-result">
+
+    <div class="q-number">— Votre profil</div>
+    <div class="q-label" id="r-titre">Voici ce que nous voyons pour vous.</div>
+
+    <div class="divider"></div>
+
+    <div class="result-block">
+      <div class="r-label">Financement disponible</div>
+      <div class="r-value" id="r-opco-titre"></div>
+      <div class="r-body" id="r-opco-body"></div>
+      <div class="info-box" id="r-opco-box"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="result-block">
+      <div class="r-label">Formule recommandée</div>
+      <div class="r-value" id="r-formule-nom"></div>
+      <div class="r-body" id="r-formule-body"></div>
+      <div id="r-formule-badge"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="result-block">
+      <div class="r-label">Ce que vous avez partagé</div>
+      <div class="r-body" id="r-needs"></div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">Note interne — Studio Opissime</div>
+      <pre id="r-note"></pre>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+      <button class="btn-next" onclick="window.location.href='mailto:contact@opissime.fr?subject=Prise de contact — ' + encodeURIComponent(document.getElementById('f-prenom').value || 'nouvelle cliente')">Prendre rendez-vous</button>
+      <button class="restart-link" onclick="restart()">Recommencer</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  let data = { prenom:'', activite:'', email:'', statut:'', budget:'', needs:[] };
+  let currentStep = 0;
+  const stepIds = ['step-0','step-1','step-2','step-3','step-result'];
+  const totalSteps = 4;
+
+  function showStep(n) {
+    stepIds.forEach(id => document.getElementById(id).classList.remove('active'));
+    document.getElementById(stepIds[n]).classList.add('active');
+    currentStep = n;
+    if (n < totalSteps) {
+      const pct = Math.round(((n + 1) / totalSteps) * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-label').textContent = 'Étape ' + (n + 1) + ' sur ' + totalSteps;
+    } else {
+      document.getElementById('progress-fill').style.width = '100%';
+      document.getElementById('progress-label').textContent = 'Profil complété';
+    }
+  }
+
+  function next() {
+    if (currentStep === 0) {
+      data.prenom = document.getElementById('f-prenom').value.trim() || 'vous';
+      data.activite = document.getElementById('f-activite').value.trim();
+      data.email = document.getElementById('f-email').value.trim();
+    }
+    if (currentStep < totalSteps - 1) showStep(currentStep + 1);
+  }
+
+  function prev() { if (currentStep > 0) showStep(currentStep - 1); }
+
+  function select(el, key, val) {
+    el.closest('.choices').querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    data[key] = val;
+  }
+
+  function toggleTag(el, val) {
+    el.classList.toggle('selected');
+    if (data.needs.includes(val)) data.needs = data.needs.filter(n => n !== val);
+    else data.needs.push(val);
+  }
+
+  function showResult() {
+    buildResult();
+    showStep(4);
+  }
+
+  function restart() {
+    data = { prenom:'', activite:'', email:'', statut:'', budget:'', needs:[] };
+    document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.tag').forEach(t => t.classList.remove('selected'));
+    document.getElementById('f-prenom').value = '';
+    document.getElementById('f-activite').value = '';
+    document.getElementById('f-email').value = '';
+    showStep(0);
+  }
+
+  function buildResult() {
+    const prenom = data.prenom || 'vous';
+    document.getElementById('r-titre').textContent = 'Voici ce que nous voyons pour vous, ' + prenom + '.';
+
+    const opcoData = {
+      salarie: {
+        titre: 'Formation finançable via votre OPCO employeur',
+        body: 'En tant que salariée, votre employeur cotise à un OPCO. La formation peut être prise en charge sur les fonds de formation professionnelle, sans impact sur votre salaire.',
+        box: '<strong>À faire :</strong> demandez à votre service RH l\'OPCO dont dépend votre entreprise (Atlas, Akto, Uniformation, Afdas…) et soumettez une demande de prise en charge avant le démarrage.'
+      },
+      ae: {
+        titre: 'Formation finançable via l\'OPCO EP (ex-AGEFICE)',
+        body: 'En tant qu\'auto-entrepreneuse, vous cotisez à l\'OPCO EP. Vous disposez d\'un droit annuel à la formation professionnelle.',
+        box: '<strong>OPCO EP :</strong> créez un compte sur moncompteformation.gouv.fr et/ou contactez directement l\'OPCO EP pour vérifier votre plafond disponible. La démarche est simple et rapide.'
+      },
+      dirigeante: {
+        titre: 'Formation finançable via l\'OPCO de votre branche',
+        body: 'Des fonds spécifiques « dirigeant » existent selon l\'OPCO de votre branche professionnelle.',
+        box: '<strong>À faire :</strong> identifiez l\'OPCO lié à votre convention collective, contactez leur service formation et déposez un dossier avant le démarrage. Marie peut vous accompagner dans cette démarche.'
+      },
+      demandeur: {
+        titre: 'Formation finançable via France Travail (AIF)',
+        body: 'L\'Aide Individuelle à la Formation (AIF) permet de financer tout ou partie de la formation avec l\'accord de votre conseiller France Travail.',
+        box: '<strong>AIF France Travail :</strong> parlez-en à votre conseiller lors de votre prochain rendez-vous. Si le projet est validé, la prise en charge peut être totale.'
+      },
+      autre: {
+        titre: 'Des options existent — faisons le point ensemble',
+        body: 'Selon votre situation, des aides régionales, des dispositifs Transitions Pro ou un paiement échelonné peuvent être explorés.',
+        box: '<strong>À faire :</strong> réservez un appel découverte gratuit avec Marie pour identifier ensemble les options les plus adaptées.'
+      }
+    };
+
+    const opco = opcoData[data.statut] || opcoData['autre'];
+    document.getElementById('r-opco-titre').textContent = opco.titre;
+    document.getElementById('r-opco-body').textContent = opco.body;
+    document.getElementById('r-opco-box').innerHTML = opco.box;
+
+    const formuleData = {
+      depart: { nom:'Formule Sens', body:'Le point d\'entrée idéal pour poser vos fondations stratégiques avant de construire quoi que ce soit.', badge:'badge-green' },
+      positionnement: { nom:'Formule Sens', body:'Clarifier votre unicité et votre positionnement est la première priorité. La Formule Sens est conçue pour ça.', badge:'badge-green' },
+      storytelling: { nom:'Formule Sens', body:'Raconter votre histoire de façon juste et différenciante commence par un travail de fond sur votre identité de marque.', badge:'badge-green' },
+      refonte: { nom:'Formule Style', body:'Une refonte visuelle et éditoriale complète, déclinée en supports activables pour votre communication.', badge:'badge-amber' },
+      identite: { nom:'Formule Style', body:'Construire une identité visuelle cohérente et mémorable — logo, charte, supports — c\'est l\'objet de la Formule Style.', badge:'badge-amber' },
+      reseaux: { nom:'Formule Simplicité', body:'Maîtriser vos réseaux sans vous épuiser, avec une ligne éditoriale claire et des routines qui tiennent dans la durée.', badge:'badge-amber' },
+      autonomie: { nom:'Formule Simplicité', body:'Gagner en fluidité et en constance, avec les bons outils et la bonne organisation — c\'est la promesse de la Formule Simplicité.', badge:'badge-amber' },
+      clients: { nom:'Formule Déesse', body:'Attirer plus de clients nécessite une communication cohérente de A à Z. La Formule Déesse couvre l\'ensemble du parcours.', badge:'badge-dark' }
+    };
+
+    let formule = { nom:'Appel découverte recommandé', body:'Vos besoins nécessitent un échange pour choisir la formule la plus adaptée. Marie vous propose un premier appel gratuit.', badge:'badge-dark' };
+
+    for (const n of data.needs) {
+      if (formuleData[n]) { formule = formuleData[n]; break; }
+    }
+    if (data.needs.length >= 3) {
+      formule = { nom:'Formule Déesse', body:'Vos besoins sont multiples et interconnectés. L\'accompagnement complet (Sens + Style + Simplicité) est la voie la plus cohérente.', badge:'badge-dark' };
+    }
+
+    document.getElementById('r-formule-nom').textContent = formule.nom;
+    document.getElementById('r-formule-body').textContent = formule.body;
+    document.getElementById('r-formule-badge').innerHTML = '<span class="badge ' + formule.badge + '">' + formule.nom + '</span>';
+
+    const needLabels = { depart:'Démarrage', refonte:'Refonte image', positionnement:'Positionnement', reseaux:'Réseaux sociaux', identite:'Identité visuelle', clients:'Acquisition clients', autonomie:'Autonomie', storytelling:'Storytelling' };
+    const budgetLabels = { petit:'< 300 €/mois', moyen:'300–700 €/mois', grand:'> 700 €/mois', inconnu:'Non renseigné' };
+    const statutLabels = { salarie:'Salariée', ae:'Auto-entrepreneuse', dirigeante:'Dirigeante TPE', demandeur:'En transition / France Travail', autre:'Autre' };
+
+    const needsStr = data.needs.length ? data.needs.map(n => needLabels[n]||n).join(', ') : 'Non renseignés';
+    document.getElementById('r-needs').textContent = needsStr + (data.activite ? ' · ' + data.activite : '');
+
+    const noteLines = [
+      'Prénom : ' + prenom,
+      'Activité : ' + (data.activite || 'non renseignée'),
+      'Email : ' + (data.email || 'non renseigné'),
+      'Statut : ' + (statutLabels[data.statut] || 'non renseigné'),
+      'Budget : ' + (budgetLabels[data.budget] || 'non renseigné'),
+      'Besoins : ' + needsStr,
+      '',
+      'Formule suggérée : ' + formule.nom,
+      'Financement : ' + opco.titre,
+      '',
+      '→ Priorité : vérifier éligibilité OPCO avant envoi du devis.'
+    ];
+    document.getElementById('r-note').textContent = noteLines.join('\n');
+  }
+</script>
+</body>
+</html>
